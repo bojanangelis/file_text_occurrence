@@ -1,7 +1,63 @@
 #include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+int onlyLettersOrDigits(char *line) {
+    printf("line--> %s\n", line);
+    int i;
+    int digits = 0;
+    int letters = 0;
+    for (i = 0; i < strlen(line); i++) {
+        if (isdigit(line[i])) {
+            ++digits;
+        }
+        if (isalpha(line[i])) {
+            ++letters;
+        }
+    }
+    return digits == strlen(line) || letters == (strlen(line));
+//    int i;
+//    char first = line[0];
+//    if (isalpha(first)) {
+//        for (i = 1; i < strlen(line); i++) {
+//            if (!isalpha(line[i])) return 0;
+//        }
+//    } else if (isdigit(first)) {
+//        for (i = 1; i < strlen(line); i++) {
+//            if (!isdigit(line[i])) return 0;
+//        }
+//    } else {
+//        return 0;
+//    }
+//
+//    return 1;
+}
 
 int main() {
-    printf("Hello, World!\n");
+    FILE *f = fopen("/Users/bojanangjeleski/CLionProjects/untitled136/text.txt", "r");
+    char line[100];
+    char maxLine[100];
+    int first = 1;
+
+    while (fgets(line, 100, f) != NULL) {
+        if (onlyLettersOrDigits(line)) {
+            if (first) {
+                strcpy(maxLine, line);
+                first = 0;
+            } else {
+                if (strlen(line) > strlen(maxLine)) {
+                    strcpy(maxLine, line);
+                }
+            }
+        }
+    }
+    if (first) {
+        printf("Nema");
+    } else {
+        printf("%s", maxLine);
+    }
+
+    fclose(f);
     return 0;
 }
 /*
