@@ -2,6 +2,10 @@
 #include <ctype.h>
 #include <string.h>
 
+void cleanString(char *text) {
+    text[strlen(text) - 1] = '\0';
+}
+
 int onlyLettersOrDigits(char *line) {
     printf("line--> %s\n", line);
     int i;
@@ -40,6 +44,7 @@ int main() {
     int first = 1;
 
     while (fgets(line, 100, f) != NULL) {
+        cleanString(line);
         if (onlyLettersOrDigits(line)) {
             if (first) {
                 strcpy(maxLine, line);
